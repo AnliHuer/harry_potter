@@ -4,6 +4,9 @@ describe('Strategy', function() {
   describe('test Strategy constructor', function() {
     it('should have attribute strategyItem', function() {
       var expect_strategItem =[{
+        differentNum: 1,
+        discount: 0
+      },{
           differentNum: 2,
           discount: 0.05
         },

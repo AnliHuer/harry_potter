@@ -1,5 +1,8 @@
 function Strategy() {
   this.strategyItem = [{
+    differentNum: 1,
+    discount: 0
+  },{
     differentNum: 2,
     discount: 0.05
   }, {
