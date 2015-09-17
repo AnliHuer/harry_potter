@@ -4,30 +4,30 @@ function DiscountCalculate(basket) {
   this.basket = basket;
 }
 
-DiscountCalculate.prototype.getDiscountType = function(basketItem, discountItem) {
-  var discountType = basketItem.filter(function(val) {
+DiscountCalculate.prototype.getDiscountType = function(discountItem) {
+  var discountType = this.basket.basketItem.filter(function(val) {
     return val.count > 0;
   }).length;
   discountItem.push(discountType);
   return discountItem;
 };
 
-DiscountCalculate.prototype.getDiscountArray = function(basketItem) {
+DiscountCalculate.prototype.getDiscountArray = function() {
   var discountItem = [];
-  while (basketItem.filter(function(item) {
+  while (this.basket.basketItem.filter(function(item) {
       return item.count > 0;
     }).length) {
-    discountItem = this.getDiscountType(basketItem, discountItem);
-    basketItem.forEach(function(val) {
+    discountItem = this.getDiscountType(discountItem);
+    this.basket.basketItem.forEach(function(val) {
       val.count--;
     });
   }
   return discountItem;
 };
 
-DiscountCalculate.prototype.transferDiscountItem = function(basketItem) {
+DiscountCalculate.prototype.transferDiscountItem = function() {
   var discountObjItem = [];
-  var discountItem = this.getDiscountArray(basketItem);
+  var discountItem = this.getDiscountArray();
   discountItem.forEach(function(val) {
     for (var obj in discountObjItem) {
       if (discountObjItem[obj].discountType === val) {
@@ -43,9 +43,9 @@ DiscountCalculate.prototype.transferDiscountItem = function(basketItem) {
   return discountObjItem;
 };
 
-DiscountCalculate.prototype.modefiedDiscountItem = function(discountObjItem, decreaseNum) {
+DiscountCalculate.prototype.modefiedDiscountItem = function(discountObjItem,decreaseNum) {
   discountObjItem.forEach(function(val) {
-     val.count -=(val.discountType === 5 || val.discountType === 3) ? decreaseNum : 0;
+    val.count -= (val.discountType === 5 || val.discountType === 3) ? decreaseNum : 0;
   });
   for (var obj in discountObjItem) {
     if (discountObjItem[obj].discountType === 4) {
@@ -60,7 +60,7 @@ DiscountCalculate.prototype.modefiedDiscountItem = function(discountObjItem, dec
   return discountObjItem;
 };
 
-DiscountCalculate.prototype.findDiscountType = function(discountObjItem, discountType) {
+DiscountCalculate.prototype.findDiscountType = function(discountObjItem,discountType) {
   var obj = discountObjItem.filter(function(val) {
     return val.discountType === discountType;
   });
@@ -69,7 +69,6 @@ DiscountCalculate.prototype.findDiscountType = function(discountObjItem, discoun
 
 DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
   var discountPrice = 0;
-  var r1, r2, m;
   var strategy = new Strategy();
   discountObjItem.forEach(function(val) {
     strategy.strategyItem.forEach(function(item) {
@@ -81,12 +80,12 @@ DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
   return parseFloat(discountPrice.toFixed(1));
 };
 
-DiscountCalculate.prototype.calculateDiscountPrice = function(basketItem) {
-  var discountObjItem = this.transferDiscountItem(basketItem);
-  var typeFiveCount = this.findDiscountType(discountObjItem, 5);
-  var typeThreeCount = this.findDiscountType(discountObjItem, 3);
-  discountObjItem = ((typeFiveCount > typeThreeCount) ? (this.modefiedDiscountItem(discountObjItem, typeThreeCount)) : (this.modefiedDiscountItem(discountObjItem, typeFiveCount)));
- return this.getDiscountPrice(discountObjItem);
+DiscountCalculate.prototype.calculateDiscountPrice = function() {
+  var discountObjItem = this.transferDiscountItem();
+  var typeFiveCount = this.findDiscountType(discountObjItem,5);
+  var typeThreeCount = this.findDiscountType(discountObjItem,3);
+  discountObjItem = ((typeFiveCount > typeThreeCount) ? (this.modefiedDiscountItem(discountObjItem,typeThreeCount)) : (this.modefiedDiscountItem(discountObjItem,typeFiveCount)));
+  return this.getDiscountPrice(discountObjItem);
 };
 
 DiscountCalculate.prototype.getFinalPrice = function() {
