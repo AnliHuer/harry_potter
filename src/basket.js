@@ -12,14 +12,14 @@ Basket.prototype.getBookNum = function() {
 };
 
 
-Basket.prototype.addBasketItem = function(newItem) {
+Basket.prototype.addBasketItem = function(book) {
   var item = this.basketItem.filter(function(val) {
-    return val.no === newItem.no;
+    return val.no === book.no;
   });
   if (item.length) {
-    item[0].count += newItem.count;
+    item[0].count += 1;
   } else {
-    this.basketItem.push(newItem);
+    this.basketItem.push({no:book.no,count:1});
   }
 };
 
