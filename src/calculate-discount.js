@@ -4,88 +4,77 @@ function DiscountCalculate(basket) {
   this.basket = basket;
 }
 
-DiscountCalculate.prototype.getFlagCount = function(basketItem) {
-  var flagCount = 0;
-  var max = 0;
-  basketItem.forEach(function(val) {
-    if (val.count > 0) {
-      flagCount++;
-    }
-    max = val.count > max ? val.count : max;
-  });
-  return {
-    flagCount: flagCount,
-    max: max
-  };
-};
-
-DiscountCalculate.prototype.modefyBasketItem = function(basketItem) {
-  var flagCount = 0;
-  basketItem.forEach(function(val) {
-    val.count--;
-  });
-  return basketItem;
-};
-
-DiscountCalculate.prototype.setDiscountItem = function(discountItem, flagCount) {
-  for (var item in discountItem) {
-    if (discountItem[item].discountType === flagCount) {
-      discountItem[item].count++;
-      return discountItem;
-    }
-  }
-  discountItem.push({
-    discountType: flagCount,
-    count: 1
-  });
+DiscountCalculate.prototype.getDiscountType = function(basketItem, discountItem) {
+  var discountType = basketItem.filter(function(val) {
+    return val.count > 0;
+  }).length;
+  discountItem.push(discountType);
   return discountItem;
 };
 
-DiscountCalculate.prototype.everyDiscountNum = function(basketItem) {
+DiscountCalculate.prototype.getDiscountArray = function(basketItem) {
   var discountItem = [];
-  var flagObj = this.getFlagCount(basketItem);
-  var max = flagObj.max;
-  for (var i = 0; i < max; i++) {
-    if (flagObj.flagCount) {
-      basketItem = this.modefyBasketItem(basketItem);
-      discountItem = this.setDiscountItem(discountItem, flagObj.flagCount);
-      flagObj = this.getFlagCount(basketItem);
-    }
+  while (basketItem.filter(function(item) {
+      return item.count > 0;
+    }).length) {
+    discountItem = this.getDiscountType(basketItem, discountItem);
+    basketItem.forEach(function(val) {
+      val.count--;
+    });
   }
   return discountItem;
 };
 
-DiscountCalculate.prototype.findDiscountType = function(discountItem, discountType) {
-  var item = discountItem.filter(function(val) {
+DiscountCalculate.prototype.transferDiscountItem = function(basketItem) {
+  var discountObjItem = [];
+  var discountItem = this.getDiscountArray(basketItem);
+  discountItem.forEach(function(val) {
+    for (var obj in discountObjItem) {
+      if (discountObjItem[obj].discountType === val) {
+        discountObjItem[obj].count++;
+        break;
+      }
+    }
+    discountObjItem.push({
+      discountType: val,
+      count: 1
+    });
+  });
+  return discountObjItem;
+};
+
+DiscountCalculate.prototype.modefiedDiscountItem = function(discountObjItem, decreaseNum) {
+  discountObjItem.forEach(function(val) {
+     val.count -=(val.discountType === 5 || val.discountType === 3) ? decreaseNum : 0;
+  });
+  for (var obj in discountObjItem) {
+    if (discountObjItem[obj].discountType === 4) {
+      discountObjItem[obj].count += decreaseNum * 2;
+      return discountObjItem;
+    }
+  }
+  discountObjItem.push({
+    discountType: 4,
+    count: decreaseNum * 2
+  });
+  return discountObjItem;
+};
+
+DiscountCalculate.prototype.findDiscountType = function(discountObjItem, discountType) {
+  var obj = discountObjItem.filter(function(val) {
     return val.discountType === discountType;
   });
-  if (item.length) {
-    return item[0].count;
-  } else {
-    return 0;
-  }
+  return obj[0] ? obj[0].count : 0;
 };
 
-DiscountCalculate.prototype.modefiedDiscountItem = function(discountItem, decreaseNum) {
-  discountItem.forEach(function(val) {
-    if (val.discountType === 5 || val.discountType === 3) {
-      val.count -= decreaseNum;
-    }
-    if (val.discountType === 4) {
-      val.count += decreaseNum * 2;
-    }
-  });
-  return discountItem;
-};
-
-DiscountCalculate.prototype.getDiscountPrice = function(discountItem) {
+DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
   var discountPrice = 0;
   var r1, r2, m;
   var strategy = new Strategy();
-  discountItem.forEach(function(val) {
+  discountObjItem.forEach(function(val) {
     strategy.strategyItem.forEach(function(item) {
       if (val.discountType === item.differentNum) {
-        discountPrice +=(val.discountType * val.count * item.discount * 8);
+        discountPrice += (val.discountType * val.count * item.discount * 8);
       }
     });
   });
@@ -93,17 +82,11 @@ DiscountCalculate.prototype.getDiscountPrice = function(discountItem) {
 };
 
 DiscountCalculate.prototype.calculateDiscountPrice = function(basketItem) {
-  var discountItem = this.everyDiscountNum(basketItem);
-  var typeFiveCount = this.findDiscountType(discountItem, 5);
-  var typeThreeCount = this.findDiscountType(discountItem, 1);
-  if (typeFiveCount && typeThreeCount) {
-    if (typeFiveCount > typeThreeCount) {
-      discountItem = this.modefiedDiscountItem(discountItem, typeThreeCount);
-    } else {
-      discountItem = this.modefiedDiscountItem(discountItem, typeFiveCount);
-    }
-  }
-  return this.getDiscountPrice(discountItem);
+  var discountObjItem = this.transferDiscountItem(basketItem);
+  var typeFiveCount = this.findDiscountType(discountObjItem, 5);
+  var typeThreeCount = this.findDiscountType(discountObjItem, 3);
+  discountObjItem = ((typeFiveCount > typeThreeCount) ? (this.modefiedDiscountItem(discountObjItem, typeThreeCount)) : (this.modefiedDiscountItem(discountObjItem, typeFiveCount)));
+ return this.getDiscountPrice(discountObjItem);
 };
 
 DiscountCalculate.prototype.getFinalPrice = function() {
