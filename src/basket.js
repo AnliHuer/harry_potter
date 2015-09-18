@@ -19,7 +19,10 @@ Basket.prototype.addBasketItem = function(book) {
   if (item.length) {
     item[0].count += 1;
   } else {
-    this.basketItem.push({no:book.no,count:1});
+    this.basketItem.push({
+      no: book.no,
+      count: 1
+    });
   }
 };
 

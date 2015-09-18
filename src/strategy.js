@@ -2,7 +2,7 @@ function Strategy() {
   this.strategyItem = [{
     differentNum: 1,
     discount: 0
-  },{
+  }, {
     differentNum: 2,
     discount: 0.05
   }, {
@@ -18,8 +18,8 @@ function Strategy() {
 }
 
 Strategy.prototype.getStrategy = function(differentNum) {
-  return this.strategyItem.filter(function(val){
-      return val.differentNum === differentNum ;
+  return this.strategyItem.filter(function(val) {
+    return val.differentNum === differentNum;
   })[0].discount;
 };
 

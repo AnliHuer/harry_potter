@@ -1,4 +1,4 @@
-function Book(no){
+function Book(no) {
   this.no = no;
   this.price = 8;
 }

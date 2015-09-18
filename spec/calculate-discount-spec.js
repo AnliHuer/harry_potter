@@ -60,7 +60,7 @@ describe('DiscountCalculate',function(){
     });
   });
 
-  describe('test the function calculateDiscountPrice',function(){
+describe('test the function calculateDiscountPrice',function(){
     var discountCalculate = new DiscountCalculate(new Basket());
     discountCalculate.basket.basketItem = [{no:1001,count:1},{no:1002,count:3},{no:1004,count:3},{no:1003,count:3},{no:1005,count:2}];
     it('should return get discount price',function(){
