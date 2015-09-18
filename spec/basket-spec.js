@@ -1,13 +1,16 @@
 var Basket = require('../src/basket.js');
+var Book = require('../src/book.js');
 var basket = new Basket();
 describe('Basket',function(){
 
   describe('test Basket the function addBasketItem',function(){
     it('should add the newBookItem in basketItem',function(){
-      basket.addBasketItem({no:1004,count:2});
-      expect(basket.basketItem[0].count).toEqual(2);
-      basket.addBasketItem({no:1004,count:2});
-      expect(basket.basketItem[0].count).toEqual(4);
+      var book = new Book(1001);
+      var book1 = new Book(1001);
+      basket.addBasketItem(book);
+      expect(basket.basketItem[0]).toEqual({no:1001,count:1});
+      basket.addBasketItem(book1);
+      expect(basket.basketItem[0]).toEqual({no:1001,count:2});
     });
   });
 
