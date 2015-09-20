@@ -1,5 +1,5 @@
 var Strategy = require('./strategy.js');
-
+var TYPEFIVE = 5,TYPETHREE = 3,TYPEFOUR = 4,  BOOKPRICE =8 , TRANFERTIMES = 2;
 function DiscountCalculate(basket) {
   this.basket = basket;
 }
@@ -24,7 +24,7 @@ DiscountCalculate.prototype.getDiscountArray = function() {
   return discountItem;
 };
 
-DiscountCalculate.prototype.getDiscountObjItem = function(discountObjItem,val){
+DiscountCalculate.prototype.getDiscountObjItem = function(discountObjItem, val) {
   for (var obj in discountObjItem) {
     if (discountObjItem[obj].discountType === val) {
       discountObjItem[obj].count++;
@@ -43,24 +43,24 @@ DiscountCalculate.prototype.transferDiscountItem = function() {
   var that = this;
   var discountItem = this.getDiscountArray();
   discountItem.forEach(function(val) {
-    discountObjItem = that.getDiscountObjItem(discountObjItem,val);
+    discountObjItem = that.getDiscountObjItem(discountObjItem, val);
   });
-return discountObjItem;
+  return discountObjItem;
 };
 
 DiscountCalculate.prototype.modifyDiscountItem = function(discountObjItem, decreaseNum) {
   discountObjItem.forEach(function(val) {
-    val.count -= (val.discountType === 5 || val.discountType === 3) ? decreaseNum : 0;
+    val.count -= (val.discountType === TYPEFIVE || val.discountType === TYPETHREE) ? decreaseNum : 0;
   });
   for (var obj in discountObjItem) {
-    if (discountObjItem[obj].discountType === 4) {
-      discountObjItem[obj].count += decreaseNum * 2;
+    if (discountObjItem[obj].discountType === TYPEFOUR) {
+      discountObjItem[obj].count += decreaseNum * TRANFERTIMES;
       return discountObjItem;
     }
   }
   discountObjItem.push({
-    discountType: 4,
-    count: decreaseNum * 2
+    discountType: TYPEFOUR,
+    count: decreaseNum * TRANFERTIMES
   });
   return discountObjItem;
 };
@@ -78,7 +78,7 @@ DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
   discountObjItem.forEach(function(val) {
     strategy.strategyItem.forEach(function(item) {
       if (val.discountType === item.differentNum) {
-        discountPrice += (val.discountType * val.count * item.discount * 8);
+        discountPrice += (val.discountType * val.count * item.discount * BOOKPRICE);
       }
     });
   });
@@ -87,14 +87,14 @@ DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
 
 DiscountCalculate.prototype.calculateDiscountPrice = function() {
   var discountObjItem = this.transferDiscountItem();
-  var typeFiveCount = this.findDiscountType(discountObjItem, 5);
-  var typeThreeCount = this.findDiscountType(discountObjItem, 3);
+  var typeFiveCount = this.findDiscountType(discountObjItem, TYPEFIVE);
+  var typeThreeCount = this.findDiscountType(discountObjItem, TYPETHREE);
   discountObjItem = ((typeFiveCount > typeThreeCount) ? (this.modifyDiscountItem(discountObjItem, typeThreeCount)) : (this.modifyDiscountItem(discountObjItem, typeFiveCount)));
   return this.getDiscountPrice(discountObjItem);
 };
 
 DiscountCalculate.prototype.getFinalPrice = function() {
-  var originalPrice = this.basket.getBookNum() * 8;
+  var originalPrice = this.basket.getBookNum() * BOOKPRICE;
   var discountPrice = this.calculateDiscountPrice();
   return originalPrice - discountPrice;
 };
