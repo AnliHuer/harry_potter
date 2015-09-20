@@ -5,7 +5,7 @@ function DiscountCalculate(basket) {
 }
 
 DiscountCalculate.prototype.getDiscountType = function(discountItem) {
-  var discountType = this.basket.basketItem.filter(function(val) {
+  var discountType = this.basket.getBasketItem().filter(function(val) {
     return val.count > 0;
   }).length;
   discountItem.push(discountType);
@@ -14,11 +14,11 @@ DiscountCalculate.prototype.getDiscountType = function(discountItem) {
 
 DiscountCalculate.prototype.getDiscountArray = function() {
   var discountItem = [];
-  while (this.basket.basketItem.filter(function(item) {
+  while (this.basket.getBasketItem().filter(function(item) {
       return item.count > 0;
     }).length) {
     discountItem = this.getDiscountType(discountItem);
-    this.basket.basketItem.forEach(function(val) {
+    this.basket.getBasketItem().forEach(function(val) {
       val.count--;
     });
   }
@@ -90,7 +90,7 @@ DiscountCalculate.prototype.calculateDiscountPrice = function() {
 
 DiscountCalculate.prototype.getFinalPrice = function() {
   var originalPrice = this.basket.getBookNum() * 8;
-  var discountPrice = this.calculateDiscountPrice(this.basket.basketItem);
+  var discountPrice = this.calculateDiscountPrice(this.basket.getBasketItem());
   return originalPrice - discountPrice;
 };
 
