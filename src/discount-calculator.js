@@ -8,8 +8,7 @@ DiscountCalculate.prototype.getDiscountType = function(discountItem) {
   var discountType = this.basket.getBasketItem().filter(function(val) {
     return val.count > 0;
   }).length;
-  discountItem.push(discountType);
-  return discountItem;
+  return discountType;
 };
 
 DiscountCalculate.prototype.getDiscountArray = function() {
@@ -17,7 +16,7 @@ DiscountCalculate.prototype.getDiscountArray = function() {
   while (this.basket.getBasketItem().filter(function(item) {
       return item.count > 0;
     }).length) {
-    discountItem = this.getDiscountType(discountItem);
+    discountItem.push(this.getDiscountType(discountItem));
     this.basket.getBasketItem().forEach(function(val) {
       val.count--;
     });
@@ -90,7 +89,7 @@ DiscountCalculate.prototype.calculateDiscountPrice = function() {
 
 DiscountCalculate.prototype.getFinalPrice = function() {
   var originalPrice = this.basket.getBookNum() * 8;
-  var discountPrice = this.calculateDiscountPrice(this.basket.getBasketItem());
+  var discountPrice = this.calculateDiscountPrice();
   return originalPrice - discountPrice;
 };
 

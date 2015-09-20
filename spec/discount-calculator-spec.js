@@ -6,10 +6,13 @@ describe('DiscountCalculator',function(){
 
   describe('test the function getDiscountType',function(){
     var discountCalculator = new DiscountCalculator(new Basket());
-    discountCalculator.basket.basketItem = [{number:1001,count:1},{number:1002,count:3},{number:1004,count:3},{number:1003,count:3},{number:1005,count:2}];
     it('should return discountItem having all discountType',function(){
-      var discountItem = discountCalculator.getDiscountType([]);
-      expect(discountItem[0]).toEqual(5);
+      discountCalculator.basket.basketItem = [{number:1001,count:1},{number:1002,count:3},{number:1004,count:3},{number:1003,count:3},{number:1005,count:2}];
+      var discountType = discountCalculator.getDiscountType([]);
+      expect(discountType).toEqual(5);
+      discountCalculator.basket.basketItem = [{number:1001,count:0},{number:1002,count:3},{number:1004,count:0},{number:1003,count:3},{number:1005,count:2}];
+      discountType = discountCalculator.getDiscountType([]);
+      expect(discountType).toEqual(3);
     });
   });
 
