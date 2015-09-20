@@ -2,6 +2,9 @@ function Basket() {
   this.basketItem = [];
 }
 
+Basket.prototype.getBasketItem = function() {
+  return this.basketItem;
+};
 
 Basket.prototype.getBookNum = function() {
   var bookNum = 0;
