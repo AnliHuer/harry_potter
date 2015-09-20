@@ -89,9 +89,9 @@ DiscountCalculate.prototype.calculateDiscountPrice = function() {
 };
 
 DiscountCalculate.prototype.getFinalPrice = function() {
-  var oldPrice = this.basket.getBookNum() * 8;
+  var originalPrice = this.basket.getBookNum() * 8;
   var discountPrice = this.calculateDiscountPrice(this.basket.basketItem);
-  return oldPrice - discountPrice;
+  return originalPrice - discountPrice;
 };
 
 module.exports = DiscountCalculate;
