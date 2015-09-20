@@ -69,16 +69,16 @@ describe('DiscountCalculator',function(){
     });
   });
 
-  describe('test the function modefiedDiscountItem',function(){
+  describe('test the function modifyDiscountItem',function(){
 
     it('should return new discountItem when having discountType 5 and 3 in discountItem',function(){
       var discountCalculator = new DiscountCalculator(new Basket());
       var discountObjItem = discountCalculator.transferDiscountItem();
-      expect(discountCalculator.modefiedDiscountItem(discountObjItem,1)).toEqual([{discountType: 4, count: 2 }]);
+      expect(discountCalculator.modifyDiscountItem(discountObjItem,1)).toEqual([{discountType: 4, count: 2 }]);
 
       discountCalculator.basket.basketItem = [{number:1001,count:1},{number:1002,count:3},{number:1004,count:3},{number:1003,count:3},{number:1005,count:2}];
       discountObjItem = discountCalculator.transferDiscountItem();
-      expect(discountCalculator.modefiedDiscountItem(discountObjItem,1)).toEqual([{discountType: 5, count: 0 },{discountType: 4, count: 3 },{discountType: 3, count: 0 }]);
+      expect(discountCalculator.modifyDiscountItem(discountObjItem,1)).toEqual([{discountType: 5, count: 0 },{discountType: 4, count: 3 },{discountType: 3, count: 0 }]);
     });
   });
 

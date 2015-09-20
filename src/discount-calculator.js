@@ -48,7 +48,7 @@ DiscountCalculate.prototype.transferDiscountItem = function() {
 return discountObjItem;
 };
 
-DiscountCalculate.prototype.modefiedDiscountItem = function(discountObjItem, decreaseNum) {
+DiscountCalculate.prototype.modifyDiscountItem = function(discountObjItem, decreaseNum) {
   discountObjItem.forEach(function(val) {
     val.count -= (val.discountType === 5 || val.discountType === 3) ? decreaseNum : 0;
   });
@@ -89,7 +89,7 @@ DiscountCalculate.prototype.calculateDiscountPrice = function() {
   var discountObjItem = this.transferDiscountItem();
   var typeFiveCount = this.findDiscountType(discountObjItem, 5);
   var typeThreeCount = this.findDiscountType(discountObjItem, 3);
-  discountObjItem = ((typeFiveCount > typeThreeCount) ? (this.modefiedDiscountItem(discountObjItem, typeThreeCount)) : (this.modefiedDiscountItem(discountObjItem, typeFiveCount)));
+  discountObjItem = ((typeFiveCount > typeThreeCount) ? (this.modifyDiscountItem(discountObjItem, typeThreeCount)) : (this.modifyDiscountItem(discountObjItem, typeFiveCount)));
   return this.getDiscountPrice(discountObjItem);
 };
 
