@@ -24,22 +24,28 @@ DiscountCalculate.prototype.getDiscountArray = function() {
   return discountItem;
 };
 
-DiscountCalculate.prototype.transferDiscountItem = function() {
-  var discountObjItem = [];
-  var discountItem = this.getDiscountArray();
-  discountItem.forEach(function(val) {
-    for (var obj in discountObjItem) {
-      if (discountObjItem[obj].discountType === val) {
-        discountObjItem[obj].count++;
-        break;
-      }
+DiscountCalculate.prototype.getDiscountObjItem = function(discountObjItem,val){
+  for (var obj in discountObjItem) {
+    if (discountObjItem[obj].discountType === val) {
+      discountObjItem[obj].count++;
+      return discountObjItem;
     }
-    discountObjItem.push({
-      discountType: val,
-      count: 1
-    });
+  }
+  discountObjItem.push({
+    discountType: val,
+    count: 1
   });
   return discountObjItem;
+};
+
+DiscountCalculate.prototype.transferDiscountItem = function() {
+  var discountObjItem = [];
+  var that = this;
+  var discountItem = this.getDiscountArray();
+  discountItem.forEach(function(val) {
+    discountObjItem = that.getDiscountObjItem(discountObjItem,val);
+  });
+return discountObjItem;
 };
 
 DiscountCalculate.prototype.modefiedDiscountItem = function(discountObjItem, decreaseNum) {
