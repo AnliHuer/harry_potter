@@ -18,9 +18,13 @@ function Strategy() {
 }
 
 Strategy.prototype.getStrategy = function(differentNum) {
-  return this.strategyItem.filter(function(val) {
+  var item = this.strategyItem.filter(function(val) {
     return val.differentNum === differentNum;
-  })[0].discount;
+  });
+  if(item.length){
+    return item[0].discount;
+  }
+  return 0;
 };
 
 module.exports = Strategy;
