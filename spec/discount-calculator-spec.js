@@ -1,6 +1,6 @@
 var DiscountCalculator = require('../src/discount-calculator.js');
 var Basket = require('../src/basket.js');
-
+var Book = require('../src/book.js');
 
 describe('DiscountCalculator',function(){
 
@@ -128,11 +128,18 @@ describe('test the function calculateDiscountPrice',function(){
   describe('test the function getFinalPrice',function(){
 
     it('should return get final price',function(){
-      var discountCalculator = new DiscountCalculator(new Basket());
+      var basket = new Basket();
+      var discountCalculator = new DiscountCalculator(basket);
       expect(discountCalculator. getFinalPrice()).toEqual(0);
-
-      discountCalculator.basket.basketItem = [{number:1001,count:1},{number:1002,count:3},{number:1004,count:3},{number:1003,count:3},{number:1005,count:2}];
-      expect(discountCalculator. getFinalPrice()).toEqual(76.8);
+      basket.addBasketItem(new Book(1001));
+      basket.addBasketItem(new Book(1002));
+      basket.addBasketItem(new Book(1002));
+      basket.addBasketItem(new Book(1004));
+      basket.addBasketItem(new Book(1003));
+      basket.addBasketItem(new Book(1003));
+      basket.addBasketItem(new Book(1005));
+      basket.addBasketItem(new Book(1005));
+      expect(discountCalculator. getFinalPrice()).toEqual(51.2);
     });
   });
 });
