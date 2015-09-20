@@ -9,12 +9,12 @@ describe('Basket', function() {
       var book1 = new Book(1001);
       basket.addBasketItem(book);
       expect(basket.basketItem[0]).toEqual({
-        no: 1001,
+        number: 1001,
         count: 1
       });
       basket.addBasketItem(book1);
       expect(basket.basketItem[0]).toEqual({
-        no: 1001,
+        number: 1001,
         count: 2
       });
     });
@@ -23,10 +23,10 @@ describe('Basket', function() {
   describe('test Basket the function getBookNum', function() {
     it('should return the num of all buyBook', function() {
       basket.basketItem = [{
-        no: 1001,
+        number: 1001,
         count: 3
       }, {
-        no: 1003,
+        number: 1003,
         count: 1
       }];
       var buyBookNum = basket.getBookNum();

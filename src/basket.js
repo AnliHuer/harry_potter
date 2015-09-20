@@ -14,13 +14,13 @@ Basket.prototype.getBookNum = function() {
 
 Basket.prototype.addBasketItem = function(book) {
   var item = this.basketItem.filter(function(val) {
-    return val.no === book.no;
+    return val.number === book.number;
   });
   if (item.length) {
     item[0].count += 1;
   } else {
     this.basketItem.push({
-      no: book.no,
+      number: book.number,
       count: 1
     });
   }
