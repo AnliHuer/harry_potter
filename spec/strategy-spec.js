@@ -5,19 +5,19 @@ describe('Strategy', function() {
   describe('test Strategy constructor', function() {
     it('should have attribute strategyItem', function() {
       var expect_strategItem = [{
-        differentNum: 1,
+        differentCount: 1,
         discount: 0
       }, {
-        differentNum: 2,
+        differentCount: 2,
         discount: 0.05
       }, {
-        differentNum: 3,
+        differentCount: 3,
         discount: 0.1
       }, {
-        differentNum: 4,
+        differentCount: 4,
         discount: 0.2
       }, {
-        differentNum: 5,
+        differentCount: 5,
         discount: 0.25
       }];
       expect(expect_strategItem.length).toEqual(strategy.strategyItem.length);

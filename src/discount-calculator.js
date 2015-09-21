@@ -77,7 +77,7 @@ DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
   var strategy = new Strategy();
   discountObjItem.forEach(function(val) {
     strategy.strategyItem.forEach(function(item) {
-      if (val.discountType === item.differentNum) {
+      if (val.discountType === item.differentCount) {
         discountPrice += (val.discountType * val.count * item.discount * BOOKPRICE);
       }
     });
