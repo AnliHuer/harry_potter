@@ -3,6 +3,7 @@ var strategy = new Strategy();
 describe('Strategy', function() {
 
   describe('test Strategy constructor', function() {
+
     it('should have attribute strategyItem', function() {
       var expect_strategItem = [{
         differentCount: 1,
@@ -22,9 +23,11 @@ describe('Strategy', function() {
       }];
       expect(expect_strategItem.length).toEqual(strategy.strategyItem.length);
     });
+
   });
 
   describe('test Strategy the function getStrategy', function() {
+
     it('should return the discount of strategyItem', function() {
       var discount = strategy.getStrategy(4);
       var expect_discount = 0.2;
@@ -35,4 +38,5 @@ describe('Strategy', function() {
       expect(expect_discount).toEqual(discount);
     });
   });
+
 });

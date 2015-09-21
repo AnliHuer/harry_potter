@@ -3,8 +3,9 @@ var Book = require('../src/book.js');
 describe('Basket', function() {
 
   describe('test Basket the function getBasketItem', function() {
-    var basket = new Basket();
+
     it('should return the attribute of basketItem', function() {
+      var basket = new Basket();
       var basketItem = basket.getBasketItem();
       expect(basketItem).toEqual([]);
 
@@ -22,6 +23,7 @@ describe('Basket', function() {
         count: 2
       }]);
     });
+
   });
 
   describe('test Basket the function addBasketItem', function() {
@@ -50,7 +52,9 @@ describe('Basket', function() {
         count: 1
       }]);
     });
+
   });
+
 
   describe('test Basket the function getBookNum', function() {
 
@@ -68,5 +72,7 @@ describe('Basket', function() {
       buyBookNum = basket.getBookNum();
       expect(buyBookNum).toEqual(3);
     });
+
   });
+
 });

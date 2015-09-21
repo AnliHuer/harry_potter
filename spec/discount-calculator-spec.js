@@ -49,7 +49,9 @@ describe('DiscountCalculator', function() {
       discountType = discountCalculator.getDiscountType([]);
       expect(discountType).toEqual(3);
     });
+
   });
+
 
   describe('test the function getDiscountArray', function() {
 
@@ -90,7 +92,9 @@ describe('DiscountCalculator', function() {
       discountItem = discountCalculator.getDiscountArray();
       expect(discountItem).toEqual([3, 2, 1]);
     });
+
   });
+
 
   describe('test the function getDiscountObjItem', function() {
 
@@ -134,6 +138,7 @@ describe('DiscountCalculator', function() {
         count: 1
       }]);
     });
+
   });
 
 
@@ -172,7 +177,9 @@ describe('DiscountCalculator', function() {
         count: 1
       }]);
     });
+
   });
+
 
   describe('test the function modifyDiscountItem', function() {
 
@@ -212,7 +219,9 @@ describe('DiscountCalculator', function() {
         count: 0
       }]);
     });
+
   });
+
 
   describe('test the function findDiscountType', function() {
 
@@ -242,7 +251,9 @@ describe('DiscountCalculator', function() {
       discountTypeCount = discountCalculator.findDiscountType(discountObjItem, 3);
       expect(discountTypeCount).toEqual(1);
     });
+
   });
+
 
   describe('test the function getDiscountPrice', function() {
 
@@ -272,7 +283,9 @@ describe('DiscountCalculator', function() {
       discountPrice = discountCalculator.getDiscountPrice(discountObjItem);
       expect(discountPrice).toEqual(18.8);
     });
+
   });
+
 
   describe('test the function calculateDiscountPrice', function() {
 
@@ -300,7 +313,9 @@ describe('DiscountCalculator', function() {
       discountPrice = discountCalculator.calculateDiscountPrice();
       expect(discountPrice).toEqual(19.2);
     });
+
   });
+
 
   describe('test the function getFinalPrice', function() {
 
@@ -319,4 +334,5 @@ describe('DiscountCalculator', function() {
       expect(discountCalculator.getFinalPrice()).toEqual(51.2);
     });
   });
+  
 });

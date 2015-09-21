@@ -9,7 +9,9 @@ describe('Book', function() {
       var expect_number = 1001;
       expect(book.getNumber()).toEqual(expect_number);
     });
+
   });
+
 
   describe('test the function of getPrice', function() {
 
@@ -18,6 +20,7 @@ describe('Book', function() {
       var expect_price = 8;
       expect(book.getPrice()).toEqual(expect_price);
     });
+
   });
 
 });
