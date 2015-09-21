@@ -10,11 +10,17 @@ describe('Basket', function() {
 
       basket.addBasketItem(new Book(1001));
       basketItem = basket.getBasketItem();
-      expect(basketItem).toEqual([{number: 1001, count: 1}]);
+      expect(basketItem).toEqual([{
+        number: 1001,
+        count: 1
+      }]);
 
       basket.addBasketItem(new Book(1001));
       basketItem = basket.getBasketItem();
-      expect(basketItem).toEqual([{number: 1001, count: 2}]);
+      expect(basketItem).toEqual([{
+        number: 1001,
+        count: 2
+      }]);
     });
   });
 
@@ -36,7 +42,13 @@ describe('Basket', function() {
 
       basket.addBasketItem(new Book(1002));
       basketItem = basket.getBasketItem();
-      expect(basketItem).toEqual([{number: 1001, count: 2},{number: 1002, count: 1}]);
+      expect(basketItem).toEqual([{
+        number: 1001,
+        count: 2
+      }, {
+        number: 1002,
+        count: 1
+      }]);
     });
   });
 
