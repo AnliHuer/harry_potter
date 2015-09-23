@@ -1,5 +1,5 @@
 var Strategy = require('./strategy.js');
-var TYPEFIVE = 5,TYPETHREE = 3,TYPEFOUR = 4,  BOOKPRICE =8 , TRANFERTIMES = 2;
+var TYPE_FIVE = 5,TYPE_THREE = 3,TYPE_FOUR = 4,  BOOK_PRICE =8 , TRANFER_TIMES = 2;
 function DiscountCalculate(basket) {
   this.basket = basket;
 }
@@ -50,17 +50,17 @@ DiscountCalculate.prototype.transferDiscountItem = function() {
 
 DiscountCalculate.prototype.modifyDiscountItem = function(discountObjItem, decreaseNum) {
   discountObjItem.forEach(function(val) {
-    val.count -= (val.discountType === TYPEFIVE || val.discountType === TYPETHREE) ? decreaseNum : 0;
+    val.count -= (val.discountType === TYPE_FIVE || val.discountType === TYPE_THREE) ? decreaseNum : 0;
   });
   for (var obj in discountObjItem) {
-    if (discountObjItem[obj].discountType === TYPEFOUR) {
-      discountObjItem[obj].count += decreaseNum * TRANFERTIMES;
+    if (discountObjItem[obj].discountType === TYPE_FOUR) {
+      discountObjItem[obj].count += decreaseNum * TRANFER_TIMES;
       return discountObjItem;
     }
   }
   discountObjItem.push({
-    discountType: TYPEFOUR,
-    count: decreaseNum * TRANFERTIMES
+    discountType: TYPE_FOUR,
+    count: decreaseNum * TRANFER_TIMES
   });
   return discountObjItem;
 };
@@ -78,7 +78,7 @@ DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
   discountObjItem.forEach(function(val) {
     strategy.strategyItem.forEach(function(item) {
       if (val.discountType === item.differentCount) {
-        discountPrice += (val.discountType * val.count * item.discount * BOOKPRICE);
+        discountPrice += (val.discountType * val.count * item.discount * BOOK_PRICE);
       }
     });
   });
@@ -87,14 +87,14 @@ DiscountCalculate.prototype.getDiscountPrice = function(discountObjItem) {
 
 DiscountCalculate.prototype.calculateDiscountPrice = function() {
   var discountObjItem = this.transferDiscountItem();
-  var typeFiveCount = this.findDiscountType(discountObjItem, TYPEFIVE);
-  var typeThreeCount = this.findDiscountType(discountObjItem, TYPETHREE);
+  var typeFiveCount = this.findDiscountType(discountObjItem, TYPE_FIVE);
+  var typeThreeCount = this.findDiscountType(discountObjItem, TYPE_THREE);
   discountObjItem = ((typeFiveCount > typeThreeCount) ? (this.modifyDiscountItem(discountObjItem, typeThreeCount)) : (this.modifyDiscountItem(discountObjItem, typeFiveCount)));
   return this.getDiscountPrice(discountObjItem);
 };
 
 DiscountCalculate.prototype.getFinalPrice = function() {
-  var originalPrice = this.basket.getBookNum() * BOOKPRICE;
+  var originalPrice = this.basket.getBookNum() * BOOK_PRICE;
   var discountPrice = this.calculateDiscountPrice();
   return originalPrice - discountPrice;
 };
